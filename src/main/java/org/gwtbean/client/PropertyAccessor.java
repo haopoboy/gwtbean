@@ -118,7 +118,7 @@ public class PropertyAccessor {
 	 */
 	public static int getIndexOfArrayProperty(String arrayProperty) {
 		int prefixIndex = arrayProperty.indexOf(PROPERTY_KEY_PREFIX);
-		if (-1 == prefixIndex) {
+		if (prefixIndex == -1) {
 			return -1;
 		}
 

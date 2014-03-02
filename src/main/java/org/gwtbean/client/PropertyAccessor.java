@@ -41,7 +41,7 @@ public class PropertyAccessor {
 	public static BeanObject getFinalNestedObject(String propertyPath, BeanObject object) {
 		String[] propertyList = splitPropertyPath(propertyPath);
 
-		for(int i = 0; i < propertyList.length - 1; i++) {
+		for ( int i = 0; i < propertyList.length - 1; i++ ) {
 			String nestedProperty = propertyList[i];
 			int propertyIndex = getIndexOfArrayProperty(nestedProperty);
 //
@@ -57,14 +57,14 @@ public class PropertyAccessor {
 	}
 	
 	/**
-	 * Now only support Object.
+	 * Avoid {@link NullPointerException} when access with nested property.
 	 * 
 	 * @param propertyPath
 	 */
 	public static final void fillupNestedObject(String propertyPath, BeanObject object) {
 		String[] propertyList = propertyPath.split(NESTED_PROPERTY_SEPARATOR);
 
-		for (int i = 0; i < propertyList.length - 1; i++) {
+		for ( int i = 0; i < propertyList.length - 1; i++ ) {
 			String nestedProperty = propertyList[i];
 			int propertyIndex = getIndexOfArrayProperty(nestedProperty);
 

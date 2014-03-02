@@ -44,7 +44,7 @@ public class PropertyAccessor {
 		for ( int i = 0; i < propertyList.length - 1; i++ ) {
 			String nestedProperty = propertyList[i];
 			int propertyIndex = getIndexOfArrayProperty(nestedProperty);
-//
+			
 			if (propertyIndex == -1) {
 				object =  object.getBeanObject(nestedProperty);
 			} else {

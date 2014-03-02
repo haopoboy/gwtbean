@@ -8,11 +8,11 @@
 	<artifactId>gwt-bean</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>GWT Maven Archetype</name>
+	<name>GWT Bean</name>
 
 	<properties>
 		<javaVersion>1.6</javaVersion>
-		<gwtVersion>2.5.1</gwtVersion>
+		<gwtVersion>2.6.0</gwtVersion>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -54,7 +54,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>${gwtVersion}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -71,7 +71,7 @@
 				<!-- see gwt-maven-plugin documentation at codehaus.org -->
 				<!-- ================================================ -->
 				<configuration>
-					<runTarget>Core.html</runTarget>
+					<runTarget>GwtBean.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<i18nMessagesBundle>org.gwtbean.client.Messages</i18nMessagesBundle>
 					<includes>**/Gwt*Suite.java</includes>
@@ -135,7 +135,7 @@
 											gwt-maven-plugin
 										</artifactId>
 										<versionRange>
-											[2.5.1,)
+											[2.6.0,)
 										</versionRange>
 										<goals>
 											<goal>i18n</goal>

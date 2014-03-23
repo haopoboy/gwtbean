@@ -1,11 +1,15 @@
 package org.gwtbean.client.cellview;
 
 
+import java.util.Date;
+
 import org.gwtbean.client.BeanObject;
 
 import com.google.gwt.cell.client.Cell;
+import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.user.cellview.client.Column;
 
@@ -16,7 +20,39 @@ import com.google.gwt.user.cellview.client.Column;
  *
  */
 public class ColumnFactory {
-
+	
+	/**
+	 * 
+	 * @param cellType
+	 * @param propertyPath
+	 * @return
+	 * @see CellType
+	 */
+	public static Column<?, ?> createColumn(String cellType, String propertyPath) {
+		return createColumn( CellType.valueOf(cellType), propertyPath );
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param cellType
+	 * @param propertyPath
+	 * @return
+	 * @see CellType
+	 */
+	public static Column<?, ?> createColumn(CellType cellType, String propertyPath) {
+		switch (cellType) {
+		case EDIT_TEXT:
+			return createEditTextColumn(propertyPath);
+		case NUMBER:
+			return createNumberColumn(propertyPath);
+		case DATE:
+			return createDateColumn(propertyPath);
+		case TEXT:
+		default:
+			return createTextColumn(propertyPath);
+		}
+	}
 	
 	/**
 	 * Create {@link TextCell} in Column with property path.
@@ -50,14 +86,66 @@ public class ColumnFactory {
 			}
 		};
 		
-		column.setFieldUpdater( new FieldUpdater<T, String>() {
-
-			@Override
-			public void update(int index, T object, String value) {
-				object.setPropertyValue(propertyPath, value);
-			}
-		});
+		FieldUpdater<T, String> updater = createFieldUpdater(propertyPath);
+		column.setFieldUpdater(updater);
 		
 		return column;
+	}
+	
+	/**
+	 * Create {@link NumberCell} in Column with property path.
+	 * 
+	 * @param propertyPath
+	 * @return
+	 */
+	public static <T extends BeanObject> Column<T, Number> createNumberColumn(final String propertyPath) {
+		Column<T, Number> column = new Column<T, Number>( new NumberCell() ) {
+			
+			@Override
+			public Number getValue(T object) {
+				return Double.valueOf( object.getStringValue(propertyPath, "0") );
+			}
+		};
+		
+		return column;
+	}
+	
+	/**
+	 * Create {@link DateCell} in Column with property path.
+	 * 
+	 * @param propertyPath
+	 * @return
+	 */
+	public static <T extends BeanObject> Column<T, Date> createDateColumn(final String propertyPath) {
+		Column<T, Date> column = new Column<T, Date>( new DateCell() ) {
+			
+			@Override
+			public Date getValue(T object) {
+				Long date = Long.valueOf( object.getStringValue(propertyPath, "0") );
+				if (date == 0) {
+					return null;
+				} else {
+					return new Date(date);
+				}
+			}
+		};
+		
+		return column;
+	}
+
+	/**
+	 * Create updater through {@link BeanObject#setPropertyValue(String, Object)}.
+	 * 
+	 * @param propertyPath
+	 * @return
+	 */
+	public static <T extends BeanObject, V>  FieldUpdater<T, V> createFieldUpdater(final String propertyPath) {
+		return new FieldUpdater<T, V>() {
+	
+			@Override
+			public void update(int index, T object, V value) {
+				object.setPropertyValue(propertyPath, value);
+			}
+		};
 	}
 }

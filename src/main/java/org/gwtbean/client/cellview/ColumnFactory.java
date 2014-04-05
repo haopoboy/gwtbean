@@ -22,6 +22,7 @@ import com.google.gwt.user.cellview.client.Column;
 public class ColumnFactory {
 	
 	/**
+	 * A quick method to create column by {@link CellType}.
 	 * 
 	 * @param cellType
 	 * @param propertyPath
@@ -33,7 +34,7 @@ public class ColumnFactory {
 	}
 	
 	/**
-	 * 
+	 * A quick method to create column by {@link CellType}.
 	 * 
 	 * @param cellType
 	 * @param propertyPath
@@ -41,16 +42,18 @@ public class ColumnFactory {
 	 * @see CellType
 	 */
 	public static Column<?, ?> createColumn(CellType cellType, String propertyPath) {
+		
+		// Cast to write generic type to avoid compiler fails.
 		switch (cellType) {
 		case EDIT_TEXT:
-			return createEditTextColumn(propertyPath);
+			return (Column<? extends BeanObject, String>) createEditTextColumn(propertyPath);
 		case NUMBER:
-			return createNumberColumn(propertyPath);
+			return (Column<? extends BeanObject, Number>) createNumberColumn(propertyPath);
 		case DATE:
-			return createDateColumn(propertyPath);
+			return (Column<? extends BeanObject, Date>) createDateColumn(propertyPath);
 		case TEXT:
 		default:
-			return createTextColumn(propertyPath);
+			return (Column<? extends BeanObject, String>) createTextColumn(propertyPath);
 		}
 	}
 	

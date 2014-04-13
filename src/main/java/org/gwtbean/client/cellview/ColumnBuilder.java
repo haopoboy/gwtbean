@@ -99,8 +99,9 @@ public class ColumnBuilder<T extends BeanObject> {
 		public String getWidth() {
 			return width;
 		}
-		public void setWidth(String width) {
+		public ColumnConfig setWidth(String width) {
 			this.width = width;
+			return this;
 		}
 		
 		/**

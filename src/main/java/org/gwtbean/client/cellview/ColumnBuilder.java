@@ -6,26 +6,33 @@ import org.gwtbean.client.BeanObject;
 
 import com.google.gwt.user.cellview.client.AbstractCellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.Header;
-import com.google.gwt.user.cellview.client.TextHeader;
 
 /**
- * Quick builder for {@link AbstractCellTable}.
+ * Convenience builder for {@link AbstractCellTable}.<br/>
  * 
- * @author HaoPo
- *
- * @param <T>
- * 
+ * @param <T> type of {@link BeanObject}
+ * @author HaoPo Liao
  * @see CellType
  * @see ColumnFactory
+ * 
  */
 public class ColumnBuilder<T extends BeanObject> {
 	
-	private final AbstractCellTable<?> cellTable;
+	private final AbstractCellTable<T> cellTable;
 
-	public ColumnBuilder(AbstractCellTable<?> cellTable) {
+	public ColumnBuilder(AbstractCellTable<T> cellTable) {
 		super();
 		this.cellTable = cellTable;
+	}
+	
+	/**
+	 * 
+	 * @param column
+	 * @param propertyPath
+	 * @return
+	 */
+	public ColumnConfig<T> buildColumn(Column<T, ?> column, String propertyPath) {
+		return new ColumnConfig<T>(cellTable, column, propertyPath);
 	}
 	
 	/**
@@ -34,85 +41,59 @@ public class ColumnBuilder<T extends BeanObject> {
 	 * @param propertyPath
 	 * @return
 	 */
-	public ColumnConfig buildColumn(String cellType, String propertyPath) {
-		Column<?, ?> column = ColumnFactory.createColumn(cellType, propertyPath);
-		return new ColumnConfig(cellTable, column, propertyPath);
-	}
-	
-	public ColumnConfig buildColumn(CellType cellType, String propertyPath) {
-		Column<?, ?> column = ColumnFactory.createColumn(cellType, propertyPath);
-		return new ColumnConfig(cellTable, column, propertyPath);
-	}
-	
-	public ColumnConfig buildTextColumn(String propertyPath) {
-		Column<T, String> column = ColumnFactory.createTextColumn(propertyPath);
-		return new ColumnConfig(cellTable, column, propertyPath);
-	}
-	
-	public ColumnConfig buildEditTextColumn(String propertyPath) {
-		Column<T, String> column = ColumnFactory.createEditTextColumn(propertyPath);
-		return new ColumnConfig(cellTable, column, propertyPath);
-	}
-	
-	public ColumnConfig buildNumberColumn(String propertyPath) {
-		Column<T, Number> column = ColumnFactory.createNumberColumn(propertyPath);
-		return new ColumnConfig(cellTable, column, propertyPath);
-	}
-	
-	public ColumnConfig buildDateColumn(String propertyPath) {
-		Column<T, Date> column = ColumnFactory.createDateColumn(propertyPath);
-		return new ColumnConfig(cellTable, column, propertyPath);
+	public ColumnConfig<T> buildColumn(String cellType, String propertyPath) {
+		Column<T, ?> column = ColumnFactory.createColumn(cellType, propertyPath);
+		return new ColumnConfig<T>(cellTable, column, propertyPath);
 	}
 	
 	/**
-	 * Must call {@link #finish()} after build ready.
+	 * 
+	 * @param cellType
+	 * @param propertyPath
+	 * @return
 	 */
-	public static class ColumnConfig {
-		
-		@SuppressWarnings("rawtypes")
-		private final AbstractCellTable cellTable;
-		private final Column<?, ?> column;
-		private final String propertyPath;
-		
-		private Header<?> header;
-		private Header<?> footer;
-		private String width;
-		
-		public ColumnConfig(AbstractCellTable<?> cellTable, Column<?, ?> column, String propertyPath) {
-			super();
-			this.cellTable = cellTable;
-			this.column = column;
-			this.propertyPath = propertyPath;
-		}
-		
-		public ColumnConfig setHeaderString(String headerString) {
-			this.header = new TextHeader(headerString);
-			return this;
-		}
-		public ColumnConfig setFooterString(String footerString) {
-			this.footer = new TextHeader(footerString);
-			return this;
-		}
-		public String getPropertyPah() {
-			return propertyPath;
-		}
-		public String getWidth() {
-			return width;
-		}
-		public ColumnConfig setWidth(String width) {
-			this.width = width;
-			return this;
-		}
-		
-		/**
-		 * Add column to table and commit settings.
-		 */
-		@SuppressWarnings("unchecked")
-		public void finish() {
-			cellTable.addColumn(column, header, footer);
-			if (null != width) {
-				cellTable.setColumnWidth(column, width);
-			}
-		}
+	public ColumnConfig<T> buildColumn(CellType cellType, String propertyPath) {
+		Column<T, ?> column = ColumnFactory.createColumn(cellType, propertyPath);
+		return new ColumnConfig<T>(cellTable, column, propertyPath);
+	}
+	
+	/**
+	 * 
+	 * @param propertyPath
+	 * @return
+	 */
+	public ColumnConfig<T> buildTextColumn(String propertyPath) {
+		Column<T, String> column = ColumnFactory.createTextColumn(propertyPath);
+		return new ColumnConfig<T>(cellTable, column, propertyPath);
+	}
+	
+	/**
+	 * 
+	 * @param propertyPath
+	 * @return
+	 */
+	public ColumnConfig<T> buildEditTextColumn(String propertyPath) {
+		Column<T, String> column = ColumnFactory.createEditTextColumn(propertyPath);
+		return new ColumnConfig<T>(cellTable, column, propertyPath);
+	}
+	
+	/**
+	 * 
+	 * @param propertyPath
+	 * @return
+	 */
+	public ColumnConfig<T> buildNumberColumn(String propertyPath) {
+		Column<T, Number> column = ColumnFactory.createNumberColumn(propertyPath);
+		return new ColumnConfig<T>(cellTable, column, propertyPath);
+	}
+	
+	/**
+	 * 
+	 * @param propertyPath
+	 * @return
+	 */
+	public ColumnConfig<T> buildDateColumn(String propertyPath) {
+		Column<T, Date> column = ColumnFactory.createDateColumn(propertyPath);
+		return new ColumnConfig<T>(cellTable, column, propertyPath);
 	}
 }

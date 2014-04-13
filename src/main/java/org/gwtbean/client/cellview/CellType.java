@@ -9,7 +9,7 @@ import com.google.gwt.cell.client.TextCell;
  * Cell type for column.
  * 
  * @author HaoPo
- *
+ * 
  */
 public enum CellType {
 

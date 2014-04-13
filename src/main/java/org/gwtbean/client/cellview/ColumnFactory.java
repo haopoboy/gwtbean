@@ -16,8 +16,8 @@ import com.google.gwt.user.cellview.client.Column;
 /**
  * Simple factory to create {@link Cell} and {@link Column} widget. 
  * 
- * @author HaoPo
- *
+ * @author HaoPo Liao
+ * 
  */
 public class ColumnFactory {
 	
@@ -29,7 +29,7 @@ public class ColumnFactory {
 	 * @return
 	 * @see CellType
 	 */
-	public static Column<?, ?> createColumn(String cellType, String propertyPath) {
+	public static <T extends BeanObject> Column<T, ?> createColumn(String cellType, String propertyPath) {
 		return createColumn( CellType.valueOf(cellType), propertyPath );
 	}
 	
@@ -41,19 +41,19 @@ public class ColumnFactory {
 	 * @return
 	 * @see CellType
 	 */
-	public static Column<?, ?> createColumn(CellType cellType, String propertyPath) {
+	public static <T extends BeanObject> Column<T, ?> createColumn(CellType cellType, String propertyPath) {
 		
-		// Cast to write generic type to avoid compiler fails.
+		// Cast to write generic type to avoid GWT　compiler fails.
 		switch (cellType) {
 		case EDIT_TEXT:
-			return (Column<? extends BeanObject, String>) createEditTextColumn(propertyPath);
+			return createEditTextColumn(propertyPath);
 		case NUMBER:
-			return (Column<? extends BeanObject, Number>) createNumberColumn(propertyPath);
+			return createNumberColumn(propertyPath);
 		case DATE:
-			return (Column<? extends BeanObject, Date>) createDateColumn(propertyPath);
+			return createDateColumn(propertyPath);
 		case TEXT:
 		default:
-			return (Column<? extends BeanObject, String>) createTextColumn(propertyPath);
+			return createTextColumn(propertyPath);
 		}
 	}
 	

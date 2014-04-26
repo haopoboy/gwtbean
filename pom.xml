@@ -7,8 +7,22 @@
 	<groupId>org.gwtbean</groupId>
 	<artifactId>gwt-bean</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>GWT Maven Archetype</name>
+	<version>0.1-SNAPSHOT</version>
+	<name>GWT Bean</name>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+			<comments>Same as GWT Bean</comments>
+		</license>
+	</licenses>
+	<inceptionYear>2014</inceptionYear>
+	<organization>
+		<name>GWT Bean</name>
+		<url>https://github.com/haopoboy/gwt-bean</url>
+	</organization>
 
 	<properties>
 		<javaVersion>1.6</javaVersion>
@@ -27,7 +41,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -54,14 +68,14 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>${gwtVersion}</version>
 				<executions>
 					<execution>
 						<goals>
+							<goal>i18n</goal>
 							<goal>resources</goal>
 							<goal>compile</goal>
 							<goal>test</goal>
-							<goal>i18n</goal>
 							<goal>generateAsync</goal>
 						</goals>
 					</execution>
@@ -70,8 +84,10 @@
 				<!-- Plugin configuration. There are many available options, -->
 				<!-- see gwt-maven-plugin documentation at codehaus.org -->
 				<!-- ================================================ -->
+				<!-- 
+				 -->
 				<configuration>
-					<runTarget>Core.html</runTarget>
+					<runTarget>GwtBean.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<i18nMessagesBundle>org.gwtbean.client.Messages</i18nMessagesBundle>
 					<includes>**/Gwt*Suite.java</includes>
@@ -105,6 +121,39 @@
 				</configuration>
 			</plugin>
 
+			<!-- append license header to GWT-Bootstrap source and resource files. -->
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<header>src/license/header.txt</header>
+					<headerDefinitions>
+						<headerDefinition>src/license/header-definition.xml</headerDefinition>
+					</headerDefinitions>
+					<properties>
+						<year>${project.inceptionYear}</year>
+					</properties>
+					<includes>
+						<include>src/**/*.java</include>
+						<include>src/main/java/**/*.xml</include>
+					</includes>
+					<encoding>UTF-8</encoding>
+					<excludes>
+						<exclude>**/README</exclude>
+						<exclude>src/test/resources/**</exclude>
+						<exclude>src/main/resources/**</exclude>
+					</excludes>
+					<executions>
+						<execution>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -134,9 +183,7 @@
 										<artifactId>
 											gwt-maven-plugin
 										</artifactId>
-										<versionRange>
-											[2.5.1,)
-										</versionRange>
+										<versionRange>[2.5.1,)</versionRange>
 										<goals>
 											<goal>i18n</goal>
 											<goal>resources</goal>

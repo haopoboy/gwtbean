@@ -25,26 +25,6 @@ import com.google.gwt.core.client.JsArray;
  */
 public class BeanObject extends JavaScriptObject {
 
-	/**
-	 * Path separator for nested properties.
-	 * Follows normal Java conventions: getFoo()getBar() would be "foo.bar".
-	 */
-	private static final String NESTED_PROPERTY_SEPARATOR = "\\.";
-
-
-	/**
-	 * Marker that indicates the start of a property key for an
-	 * indexed or mapped property like "person.addresses[0]".
-	 */
-	private static final String PROPERTY_KEY_PREFIX = "[";
-
-
-	/**
-	 * Marker that indicates the end of a property key for an
-	 * indexed or mapped property like "person.addresses[0]".
-	 */
-	private static final String PROPERTY_KEY_SUFFIX = "]";
-
 	protected BeanObject() {}
 
 	final native void setPropertyObjectValue(String property, Object value) /*-{
@@ -100,12 +80,12 @@ public class BeanObject extends JavaScriptObject {
 	/**
 	 * Get property value. All type of value would cast to Object.
 	 * 
-	 * @param property
+	 * @param propertyPath
 	 * @return
 	 */
-	public final Object getPropertyValue(String property) {
-		BeanObject object = getFinalNestedObject(property).cast();
-		return object.getPropertyObjectValue( getFinalNestedPropertyName(property) );
+	public final Object getPropertyValue(String propertyPath) {
+		BeanObject object = getFinalNestedObject(propertyPath).cast();
+		return object.getPropertyObjectValue( getFinalNestedPropertyName(propertyPath) );
 	}
 
 	/**
@@ -139,13 +119,13 @@ public class BeanObject extends JavaScriptObject {
 	 * Get property value or default when property is empty. 
 	 * All type of value would cast to Object.
 	 * 
-	 * @param property
+	 * @param propertyPath
 	 * @param defaultValue
 	 * @return
 	 */
-	public final Object getPropertyValue(String property, Object defaultValue) {
-		BeanObject object = getFinalNestedObject(property).cast();
-		return object.getPropertyObjectValue( getFinalNestedPropertyName(property), defaultValue );
+	public final Object getPropertyValue(String propertyPath, Object defaultValue) {
+		BeanObject object = getFinalNestedObject(propertyPath).cast();
+		return object.getPropertyObjectValue( getFinalNestedPropertyName(propertyPath), defaultValue );
 	}
 	
 	/**
@@ -209,37 +189,6 @@ public class BeanObject extends JavaScriptObject {
 	}
 
 	/**
-	 * Get index from property name, such as property[20] is return 20.
-	 * If there are no index prefix, it return -1.
-	 * 
-	 * @param propertyName
-	 * @return index of array property
-	 */
-	public static final int getIndexOfArrayProperty(String propertyName) {
-
-		int prefixIndex = propertyName.indexOf(PROPERTY_KEY_PREFIX);
-		if (-1 == prefixIndex) {
-			return -1;
-		}
-
-		prefixIndex++;
-		int suffixIndex = propertyName.indexOf(PROPERTY_KEY_SUFFIX);
-		String stringOfIndex = propertyName.substring(prefixIndex, suffixIndex);
-		return Integer.valueOf(stringOfIndex);
-	}
-
-	/**
-	 * Get name of array property.
-	 * Example: "property[0]" returns "property".
-	 * 
-	 * @param propertyName
-	 * @return
-	 */
-	public static final String getNameOfArrayProperty(String propertyName) {
-		return propertyName.substring( 0, propertyName.indexOf(PROPERTY_KEY_PREFIX) );
-	}
-
-	/**
 	 * Cast {@link JsArray} to {@link List}.
 	 * 
 	 * @param array
@@ -277,12 +226,12 @@ public class BeanObject extends JavaScriptObject {
 	/**
 	 * Support nested properties.
 	 * 
-	 * @param property
+	 * @param propertyPath
 	 * @return
 	 */
-	public final <E extends JavaScriptObject> List<E> getList(String property) {
-		BeanObject object = getFinalNestedObject(property);
-		JsArray<E> array = object.getJsArray(property);
+	public final <E extends JavaScriptObject> List<E> getList(String propertyPath) {
+		BeanObject object = getFinalNestedObject(propertyPath);
+		JsArray<E> array = object.getJsArray(propertyPath);
 		return toList(array);
 	}
 	

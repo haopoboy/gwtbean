@@ -7,7 +7,7 @@
 	<groupId>org.gwtbean</groupId>
 	<artifactId>gwt-bean</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1-SNAPSHOT</version>
 	<name>GWT Bean</name>
 
 	<licenses>
@@ -26,7 +26,7 @@
 
 	<properties>
 		<javaVersion>1.6</javaVersion>
-		<gwtVersion>2.6.0</gwtVersion>
+		<gwtVersion>2.5.1</gwtVersion>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -72,10 +72,10 @@
 				<executions>
 					<execution>
 						<goals>
+							<goal>i18n</goal>
 							<goal>resources</goal>
 							<goal>compile</goal>
 							<goal>test</goal>
-							<goal>i18n</goal>
 							<goal>generateAsync</goal>
 						</goals>
 					</execution>
@@ -84,6 +84,8 @@
 				<!-- Plugin configuration. There are many available options, -->
 				<!-- see gwt-maven-plugin documentation at codehaus.org -->
 				<!-- ================================================ -->
+				<!-- 
+				 -->
 				<configuration>
 					<runTarget>GwtBean.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
@@ -181,9 +183,7 @@
 										<artifactId>
 											gwt-maven-plugin
 										</artifactId>
-										<versionRange>
-											[2.6.0,)
-										</versionRange>
+										<versionRange>[2.5.1,)</versionRange>
 										<goals>
 											<goal>i18n</goal>
 											<goal>resources</goal>

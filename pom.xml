@@ -57,6 +57,12 @@
 			<classifier>sources</classifier>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>1.6.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -84,8 +90,7 @@
 				<!-- Plugin configuration. There are many available options, -->
 				<!-- see gwt-maven-plugin documentation at codehaus.org -->
 				<!-- ================================================ -->
-				<!-- 
-				 -->
+				<!-- -->
 				<configuration>
 					<runTarget>GwtBean.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>

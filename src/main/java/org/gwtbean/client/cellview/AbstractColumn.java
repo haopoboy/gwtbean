@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author HaoPo Liao
  * 
  */
-public class AbstractColumn<T extends BeanObject> implements IsWidget, IsColumn<T> {
+public abstract class AbstractColumn<T extends BeanObject> implements IsWidget, IsColumn<T> {
 
 	private final String cellType;
 	private final String propertyPath;
@@ -33,7 +33,7 @@ public class AbstractColumn<T extends BeanObject> implements IsWidget, IsColumn<
 	public AbstractColumn(String cellType, String propertyPath) {
 		super();
 		Assertions.notNull(cellType, "cellType cannot be null");
-		Assertions.notNull(cellType, "propertyPath cannot be null");
+		Assertions.notNull(propertyPath, "propertyPath cannot be null");
 		this.cellType = cellType;
 		this.propertyPath = propertyPath;
 	}

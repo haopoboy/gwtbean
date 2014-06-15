@@ -1,5 +1,6 @@
 package org.gwtbean.shared;
 
+
 /**
  * Collect assertion methods.
  * 
@@ -24,13 +25,37 @@ public class Assertions {
 	 * Assert object is not null.
 	 * 
 	 * @param object be asserted
-	 * @param format {@link String#format(String, Object...)}
-	 * @param args {@link String#format(String, Object...)}
-	 * @throws NullPointException if object or format is null
+	 * @param message
+	 * @throws NullPointException if object is null
 	 */
-	public static void notNull(Object object, String format, Object... args) {
+	public static void notNull(Object object, String message) {
 		if (null == object) {
-			throw new NullPointerException( String.format(format, args) );
+			throw new NullPointerException(message);
+		}
+	}
+	
+	/**
+	 * Assert object is not null nor empty.
+	 * 
+	 * @param object be asserted
+	 * @throws NullPointException if object is null or object.toString() is empty.
+	 */
+	public static void notNullNorEmpty(Object object) {
+		if (null == object || object.toString().isEmpty() ) {
+			throw new NullPointerException("object is null or empty");
+		}
+	}
+	
+	/**
+	 * Assert object is not null nor empty.
+	 * 
+	 * @param object be asserted
+	 * @param message
+	 * @throws NullPointException if object is null or object.toString() is empty.
+	 */
+	public static void notNullNorEmpty(Object object, String message) {
+		if (null == object || object.toString().isEmpty() ) {
+			throw new NullPointerException(message);
 		}
 	}
 }

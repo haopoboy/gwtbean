@@ -6,7 +6,7 @@ import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
 
 /**
- * Cell type for column.
+ * Cell type for {@link ColumnFactory} to specific the building structure.
  * 
  * @author HaoPo
  * 

@@ -19,7 +19,6 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class AbstractColumn<T extends BeanObject> implements IsWidget, IsColumn<T> {
 
-	private final String cellType;
 	private final String propertyPath;
 	private String header;
 	private String footer;
@@ -30,11 +29,9 @@ public abstract class AbstractColumn<T extends BeanObject> implements IsWidget, 
 	 * @param cellType
 	 * @param propertyPath
 	 */
-	public AbstractColumn(String cellType, String propertyPath) {
+	public AbstractColumn(String propertyPath) {
 		super();
-		Assertions.notNull(cellType, "cellType cannot be null");
 		Assertions.notNull(propertyPath, "propertyPath cannot be null");
-		this.cellType = cellType;
 		this.propertyPath = propertyPath;
 	}
 
@@ -51,23 +48,9 @@ public abstract class AbstractColumn<T extends BeanObject> implements IsWidget, 
 		.finish();
 	}
 	
-	/**
-	 * Override it if wants to custom Column.
-	 * 
-	 * @return
-	 */
-	Column<T, ?> createColumn() {
-		Column<T, ?> column = ColumnFactory.createColumn(cellType, propertyPath);
-		return column;
-	}
-	
 	@Override
 	public Widget asWidget() {
 		throw new MethodNotSupportedException();
-	}
-
-	public String getCellType() {
-		return cellType;
 	}
 
 	public String getPropertyPath() {
@@ -97,4 +80,11 @@ public abstract class AbstractColumn<T extends BeanObject> implements IsWidget, 
 	public void setWidth(String width) {
 		this.width = width;
 	}
+
+	/**
+	 * Override it if wants to custom Column.
+	 * 
+	 * @return
+	 */
+	protected abstract Column<T, ?> createColumn();
 }

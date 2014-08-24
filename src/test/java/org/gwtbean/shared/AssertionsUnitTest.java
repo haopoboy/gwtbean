@@ -1,7 +1,6 @@
 package org.gwtbean.shared;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -13,11 +12,31 @@ public class AssertionsUnitTest {
 	}
 	
 	@Test
-	public void notNullWithMessageFormat() {
+	public void notNullWithMessage() {
 		try {
-			Assertions.notNull(null, "I'm %s", "Assertions");
+			Assertions.notNull(null, "I'm not null assertion");
 		} catch(NullPointerException exception) {
-			assertThat( exception.getMessage(), is("I'm Assertions") );
+			assertThat( exception.getMessage() ).isEqualTo("I'm not null assertion");
 		}
 	}
+	
+	@Test(expected = NullPointerException.class)
+	public void notNullNorEmptyWhenNull() {
+		Assertions.notNullNorEmpty(null);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void notNullNorEmptyWhenEmpty() {
+		Assertions.notNullNorEmpty("");
+	}
+	
+	@Test
+	public void notNullNorEmptyWithMessage() {
+		try {
+			Assertions.notNull(null, "I'm not null nor empty assertion");
+		} catch(NullPointerException exception) {
+			assertThat( exception.getMessage() ).isEqualTo("I'm not null nor empty assertion");
+		}
+	}
+	
 }

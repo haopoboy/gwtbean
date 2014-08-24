@@ -6,7 +6,7 @@ import org.gwtbean.client.GwtBeanTestCase;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.user.cellview.client.Column;
 
-public class ColumnFactoryGwtTest extends GwtBeanTestCase{
+public class ColumnFactoryGwtTest extends GwtBeanTestCase {
 	
 	public void testCreateTextColumn() {
 		BeanObject object = BeanObject.createObject().cast();

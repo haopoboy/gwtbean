@@ -8,6 +8,7 @@ import com.google.gwt.user.cellview.client.Header;
 import com.google.gwt.user.cellview.client.TextHeader;
 
 /**
+ * Store column properties for {@link AbstractCellTable}
  * Must call {@link #finish()} after build ready.
  * 
  * @param <T> type of {@link BeanObject} 

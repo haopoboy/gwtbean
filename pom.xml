@@ -73,40 +73,7 @@
 
 	<build>
 		<plugins>
-			<!-- ================================================ -->
-			<!-- GWT Maven Plugin -->
-			<!-- Attention to resource goal, GWT library needs it. -->
-			<!-- ================================================ -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwt.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>i18n</goal>
-							<goal>resources</goal>
-							<goal>compile</goal>
-							<goal>test</goal>
-							<goal>generateAsync</goal>
-						</goals>
-					</execution>
-				</executions>
-				<!-- ================================================ -->
-				<!-- Plugin configuration. There are many available options, -->
-				<!-- see gwt-maven-plugin documentation at codehaus.org -->
-				<!-- ================================================ -->
-				<!-- -->
-				<configuration>
-					<runTarget>GwtBean.html</runTarget>
-					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<i18nMessagesBundle>org.gwtbean.client.Messages</i18nMessagesBundle>
-					<includes>**/Gwt*Suite.java</includes>
-					<excludes>**/*GwtTest.java</excludes>
-					<testTimeOut>256</testTimeOut>
-					<mode>htmlunit</mode>
-				</configuration>
-			</plugin>
+		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -175,39 +142,43 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		
 		<pluginManagement>
 			<plugins>
+			<!-- ================================================ -->
+			<!-- GWT Maven Plugin -->
+			<!-- Attention to resource goal, GWT library needs it. -->
+			<!-- ================================================ -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>${gwt.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>i18n</goal>
+							<goal>resources</goal>
+							<goal>compile</goal>
+							<goal>test</goal>
+							<goal>generateAsync</goal>
+						</goals>
+					</execution>
+				</executions>
 				<!-- ================================================ -->
-				<!-- This plugin's configuration is used to store Eclipse m2e settings -->
-				<!-- only. It has no influence on the Maven build itself. -->
+				<!-- Plugin configuration. There are many available options, -->
+				<!-- see gwt-maven-plugin documentation at codehaus.org -->
 				<!-- ================================================ -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>
-											gwt-maven-plugin
-										</artifactId>
-										<versionRange>[2.5.1,)</versionRange>
-										<goals>
-											<goal>i18n</goal>
-											<goal>resources</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
+				<!-- -->
+				<configuration>
+					<runTarget>GwtBean.html</runTarget>
+					<hostedWebapp>${webappDirectory}</hostedWebapp>
+					<i18nMessagesBundle>org.gwtbean.client.Messages</i18nMessagesBundle>
+					<includes>**/Gwt*Suite.java</includes>
+					<excludes>**/*GwtTest.java</excludes>
+					<testTimeOut>256</testTimeOut>
+					<mode>htmlunit</mode>
+				</configuration>
+			</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
